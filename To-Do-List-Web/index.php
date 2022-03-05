@@ -5,6 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+	<!-- Login view -->
      <form action="login.php" method="post">
 	   <img src="To_Do.svg" alt="Logo is unable to read" class = "center">
      	<?php if (isset($_GET['error'])) { ?>

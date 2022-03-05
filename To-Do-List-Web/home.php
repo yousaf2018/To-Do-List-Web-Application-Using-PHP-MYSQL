@@ -37,6 +37,7 @@ if (isset($_SESSION['email']) && isset($_SESSION['user_name'])) {
                     </nav>
           </div>
           <br><br>
+          <!-- Fetching records from database and displaying in the table -->
           <?php require_once 'taskProcessing.php'; ?>
           <?php
                $sql = "SELECT * FROM tasks";
@@ -54,19 +55,15 @@ if (isset($_SESSION['email']) && isset($_SESSION['user_name'])) {
                          </thead>
                          <?php while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)): ?>
                          <tr>
-                              <?php echo $row['Title'];
-                                   echo $row['Priority'];
-                                   echo $row['Label'];
-                              ?>
-                              <td>1</td>
-                              <td>2</td>
-                              <td>3</td>
+                              <td><?php echo $row['Title'] ?></td>
+                              <td><?php echo $row['Priority'] ?></td>
+                              <td><?php echo $row['Label'] ?></td>
                          </tr>
                      <?php endwhile; ?>
                     </table>
                </div>
                          </div>
-
+          <!-- Inserting new records in the database mysql -->
           <div class = "row justify-content-center">
                <form action="taskProcessing.php" method="POST">
                     <div class = "form-group">

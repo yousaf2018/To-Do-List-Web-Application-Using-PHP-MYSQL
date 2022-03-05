@@ -5,8 +5,10 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+     <!-- Signup view -->
      <form action="signup-check.php" method="post">
      <img src="To_Do.svg" alt="Logo is unable to read" class = "center">
+     	<!-- Checking different conditios if there is error occurred -->
      	<?php if (isset($_GET['error'])) { ?>
      		<p class="error"><?php echo $_GET['error']; ?></p>
      	<?php } ?>
@@ -14,6 +16,7 @@
           <?php if (isset($_GET['success'])) { ?>
                <p class="success"><?php echo $_GET['success']; ?></p>
           <?php } ?>
+     	<!-- Getting info from users for Signup process -->
 
           <label class = "text">Email</label>
           <?php if (isset($_GET['email'])) { ?>
