@@ -1,6 +1,6 @@
 ### To Do List using HTML, CSS, Javascript, Bootstrap, PHP and MYSQL <br />
 <br />
-For running this project, XAMPP server is requried with MYSQL to demonstrate the website on the <br />
+For running this project, XAMPP server is required with MYSQL to demonstrate the website on the <br />
 local host.Demo video is also available with source code.<br />
 <br />
 Following functionalities is implemented<br />
