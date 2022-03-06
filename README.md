@@ -4,14 +4,14 @@ For running this project, XAMPP server is requried with MYSQL to demonstrate the
 local host.Demo video is also available with source code.<br />
 <br />
 Following functionalities is implemented<br />
-### 1. Authentication<br />
+ 1. Authentication<br />
   a. The user can be able to sign-in to use the application on (index.php) file. In case the user does not have an<br />
      account, he/she can redirest to sign-up screen.<br />
   b. Sign-up  requires username, email address, password and confirm password fields from<br />
      the user.<br />
   c. Sign-in require username and password to sign into the app.<br />
      d. The user can be able to sign-out of the application.<br />
-### 2. Requirements<br />
+ 2. Requirements<br />
   a. The user can be able to view only his/her tasks once he/she signs into the account  <br /> 
   b. The user can be able to edit each task.<br />
   c. The user can also be able to delete a task.<br />
