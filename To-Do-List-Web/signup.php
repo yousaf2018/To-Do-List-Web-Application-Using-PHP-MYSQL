@@ -8,7 +8,7 @@
      <!-- Signup view -->
      <form action="signup-check.php" method="post">
      <img src="To_Do.svg" alt="Logo is unable to read" class = "center">
-     	<!-- Checking different conditios if there is error occurred -->
+     	<!-- Checking different conditions if there is error occurred during input-->
      	<?php if (isset($_GET['error'])) { ?>
      		<p class="error"><?php echo $_GET['error']; ?></p>
      	<?php } ?>
@@ -19,6 +19,7 @@
      	<!-- Getting info from users for Signup process -->
 
           <label class = "text">Email</label>
+          <!-- Check condition if there is no input than show placeholders -->
           <?php if (isset($_GET['email'])) { ?>
                <input type="text" 
                       name="email" 
@@ -29,7 +30,7 @@
                       name="email" 
                       placeholder="Please enter your email here"><br>
           <?php }?>
-
+          <!-- Check condition if there is no input than show placeholders -->
           <label class = "text">User Name</label>
           <?php if (isset($_GET['userName'])) { ?>
                <input type="text" 

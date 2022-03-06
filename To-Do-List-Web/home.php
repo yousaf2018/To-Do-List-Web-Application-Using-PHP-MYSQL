@@ -1,6 +1,6 @@
 <?php 
 session_start();
-
+include 'taskProcessing.php';
 if (isset($_SESSION['email']) && isset($_SESSION['user_name'])) {
 
  ?>
@@ -22,30 +22,77 @@ if (isset($_SESSION['email']) && isset($_SESSION['user_name'])) {
                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-               <!-- Navigation bar -->
+
+
+          <!-- Navigation bar -->
           <div class = "container-fluid">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light mx-auto">
-                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="True" aria-label="Toggle navigation">
                               <span class="navbar-toggler-icon"></span>
                          </button>
+                         
                               <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                                    <a class="navbar-brand " href="home.php">
                                         <img src="To_Do.svg" width="100" height="100" alt="Logo">
                                    </a>  
+                              <div class = "container">
+                                   <h3 style='color: green'><?php echo $_SESSION['user_name']; ?>  welcome To Do list</h3>
+                              </div>
                                    <button class="btn btn-outline-success navbar-nav ml-auto" type="submit"><a href = "logout.php">Signout</a></button>
                               </div>
+
                     </nav>
           </div>
           <br><br>
+          
+          <!-- Inserting new records in the database mysql -->
+          <div class = "row justify-content-center">
+               <form action="taskProcessing.php" method="POST">
+                    <div class = "form-group">
+                         <label class="text">Task Title</label>
+                         <input type="text" name= "title"  class="form-control" placeholder="Enter your task title">
+                    </div>
+                    <div class = "form-group">
+                         <label class="text">Priority</label>
+                                   <br>
+                                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary active">
+                                             <input type="radio" name="options" value="Low" autocomplete="off" checked> Low
+                                        </label>
+                                        <label class="btn btn-secondary">
+                                             <input type="radio" name="options" value="Intermediate" autocomplete="off"> Intermediate
+                                        </label>
+                                        <label class="btn btn-secondary">
+                                             <input type="radio" name="options" value="High" autocomplete="off"> High
+                                        </label>
+                                   </div>                    
+                    </div>
+                    <div class = "form-group">
+                         <label class="text">Label</label>
+                         <input type="text" name= "label"  class="form-control" placeholder="Enter your task Label">
+                    </div>
+                    <div class = "form-group">
+                         <?php
+                              if(isset($_SESSION['update'])):
+                         ?>
+                                   <button type = "submit" class = "btn btn-secondary justify-center" name="update">Update</button>
+                              <?php else: ?>
+                                   <button type = "submit" class = "btn btn-primary justify-center" name="save">Create</button>
+                              <?php endif; ?>
+                    </div>
+                    <input type="hidden" name="id" value = <?php echo $_SESSION['id']; ?>>
+               </form>   
+          </div>
           <!-- Fetching records from database and displaying in the table -->
           <?php require_once 'taskProcessing.php'; ?>
           <?php
-               $sql = "SELECT * FROM tasks";
+               $id = $_SESSION['id'];
+               $sql = "SELECT * FROM tasks where user_id = '$id' order by priority";
                $result = mysqli_query($conn, $sql);
                ?>
                <div class="container">
                <div class="row justify-content-center">
-                    <table class="table">
+                    <table class="table"> 
                           <thead>
                               <tr>
                                    <th>Title</th>
@@ -58,42 +105,24 @@ if (isset($_SESSION['email']) && isset($_SESSION['user_name'])) {
                               <td><?php echo $row['Title'] ?></td>
                               <td><?php echo $row['Priority'] ?></td>
                               <td><?php echo $row['Label'] ?></td>
+                              <td> 
+
+                                   <a 
+                                        <?php $_SESSION['updateID'] = $row['id']?>
+                                        href="taskProcessing.php?edit='10'" class="btn btn-primary">
+                                        Edit
+                                  </a>  
+                                   <a 
+                                        href="taskProcessing.php?delete=<?php echo $row['id']?>" class="btn btn-danger">
+                                        Delete
+                                  </a>
+                              </td>
                          </tr>
                      <?php endwhile; ?>
                     </table>
                </div>
                          </div>
-          <!-- Inserting new records in the database mysql -->
-          <div class = "row justify-content-center">
-               <form action="taskProcessing.php" method="POST">
-                    <div class = "form-group">
-                         <label class="text">Task Title</label>
-                         <input type="text" name= "title" class="form-control" placeholder="Enter your task title">
-                    </div>
-                    <div class = "form-group">
-                         <label class="text">Priority</label>
-                                   <br>
-                                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-secondary active">
-                                             <input type="radio" name="options" value="Low" autocomplete="off" checked> Low
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                             <input type="radio" name="options" value="Medium" autocomplete="off"> Medium
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                             <input type="radio" name="options" value="High" autocomplete="off"> High
-                                        </label>
-                                   </div>                    
-                    </div>
-                    <div class = "form-group">
-                         <label class="text">Label</label>
-                         <input type="text" name= "label" class="form-control" placeholder="Enter your task Label">
-                    </div>
-                    <div class = "form-group">
-                         <button type = "submit" class = "btn btn-primary justify-center" name="save">Create Task</button>
-                    </div>
-               </form>   
-          </div>
+
 
      </body>
 </html>
